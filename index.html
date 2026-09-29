@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>diário 365</title>
+<meta name="description" content="diário 365: um texto por dia, do 1º de janeiro ao último dia do ano. por enrico pierro.">
+<meta property="og:title" content="diário 365 · enrico pierro">
+<meta property="og:description" content="um texto por dia, do 1º de janeiro ao último dia do ano.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.ico">
+
+<meta name="theme-color" content="#08090c">
+<style>
+html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+:root{
+  color-scheme:dark;
+  --ink:#08090c;
+  --slate:#121419;
+  --graphite:#1b1e25;
+  --line:rgba(255,255,255,.12);
+  --line-soft:rgba(255,255,255,.07);
+  --text:#ffffff;
+  --read:rgba(255,255,255,.86);
+  --mute:rgba(255,255,255,.6);
+  --faint:rgba(255,255,255,.38);
+  --amber:#ffb232;
+  --amber-ink:#0a0b06;
+  --amber-soft:rgba(255,178,50,.14);
+  --display:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro","Helvetica Neue",system-ui,"Segoe UI",Roboto,sans-serif;
+  --textf:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro","Helvetica Neue",system-ui,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:1180px;
+  --measure:36rem;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{background:var(--ink);-webkit-text-size-adjust:100%}
+body{background:var(--ink);color:var(--text);font:400 17px/1.5 var(--textf);letter-spacing:-.01em;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font:600 12px/1.2 var(--mono);letter-spacing:.14em;color:var(--amber)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(8,9,12,.82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line-soft)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:60px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;min-width:0}
+.brand img{height:34px;width:auto;display:block}
+.brand .sep{width:1px;height:22px;background:var(--line)}
+.brand a{display:block;text-decoration:none}
+.brand .name{font:700 15px/1 var(--display);letter-spacing:-.02em;white-space:nowrap}
+.brand .name b{color:var(--amber);font-weight:800}
+.nav{margin-left:auto;display:flex;gap:4px}
+.nav a{font:500 15px/1 var(--textf);text-decoration:none;color:var(--mute);padding:10px 12px;border-radius:999px;white-space:nowrap}
+.nav a[aria-current="page"]{color:var(--text);background:rgba(255,255,255,.08)}
+.nav a:hover{color:var(--text)}
+
+/* hero */
+.hero{padding-block:clamp(36px,7vw,84px) 28px}
+.hero h1{font:800 clamp(52px,12vw,132px)/.88 var(--display);letter-spacing:-.055em;margin:14px 0 0;text-wrap:balance}
+.hero h1 span{color:var(--amber)}
+.hero .lede{color:var(--mute);max-width:34rem;font-size:clamp(17px,2.2vw,19px);line-height:1.55;margin:22px 0 0}
+.count{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;margin-top:30px;font:500 15px/1.3 var(--textf);color:var(--mute)}
+.count strong{font:800 30px/1 var(--display);letter-spacing:-.03em;color:var(--text);font-variant-numeric:tabular-nums}
+.count .left strong{color:var(--faint)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;font:600 15px/1 var(--textf);text-decoration:none;border:1px solid var(--line);background:transparent;cursor:pointer}
+.btn.primary{background:var(--amber);color:var(--amber-ink);border-color:var(--amber)}
+.btn:hover{border-color:rgba(255,255,255,.3)}
+.btn.primary:hover{filter:brightness(1.06)}
+
+/* year strip */
+.year{margin-top:40px}
+.year-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 12px;margin-bottom:10px}
+.year-head small{color:var(--faint);font:500 12px/1 var(--mono);letter-spacing:.08em}
+.strip{display:grid;grid-template-columns:repeat(73,1fr);gap:2px}
+.strip a,.strip span{display:block;aspect-ratio:1/2.2;border-radius:2px;background:rgba(255,255,255,.07)}
+.strip a{background:var(--amber);opacity:.9}
+.strip a:hover,.strip a:focus-visible{opacity:1;transform:scaleY(1.15)}
+.months-ruler{display:grid;grid-template-columns:repeat(12,1fr);margin-top:8px;color:var(--faint);font:500 11px/1 var(--mono);letter-spacing:.06em}
+
+/* controls */
+.controls{position:sticky;top:calc(env(safe-area-inset-top,0px) + 60px);z-index:10;background:var(--ink);padding-block:14px 12px;border-bottom:1px solid var(--line-soft)}
+.search{position:relative}
+.search input{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--slate);color:var(--text);font:400 17px/1 var(--textf);padding:0 44px 0 44px;-webkit-appearance:none;appearance:none}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.search input::placeholder{color:var(--faint)}
+.search input:focus{outline:none;border-color:var(--amber)}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--faint)}
+.search .clear{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--mute);cursor:pointer;font-size:20px;line-height:1}
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-top:12px;padding-bottom:2px;-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--mute);font:500 14px/1 var(--textf);cursor:pointer;white-space:nowrap;text-decoration:none}
+.chip i{font-style:normal;font:500 11px/1 var(--mono);color:var(--faint)}
+.chip[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--amber-ink)}
+.chip[aria-pressed="true"] i{color:rgba(10,11,6,.6)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;color:var(--mute);font-size:14px}
+.bar output{font-variant-numeric:tabular-nums}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{white-space:nowrap;border:0;background:transparent;color:var(--mute);height:30px;padding:0 12px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:500}
+.seg button[aria-pressed="true"]{background:rgba(255,255,255,.1);color:var(--text)}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:28px 22px;padding-block:26px 60px}
+.card{display:flex;flex-direction:column;gap:12px;text-decoration:none;min-width:0}
+.card .ph{position:relative;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;background:var(--slate)}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.card:hover .ph img{transform:scale(1.03)}
+.card .num{position:absolute;left:12px;bottom:10px;font:800 44px/.9 var(--display);letter-spacing:-.05em;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55)}
+.card .num small{font-size:.38em;font-weight:600;letter-spacing:-.01em;opacity:.7}
+.card .meta{font:500 12px/1.2 var(--mono);letter-spacing:.06em;color:var(--amber)}
+.card p{margin:0;color:var(--mute);font-size:15px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card p mark,.hit mark{background:var(--amber-soft);color:var(--amber);border-radius:3px;padding:0 2px}
+.empty{padding:60px 0;color:var(--mute);text-align:center}
+.empty strong{display:block;color:var(--text);font:700 22px/1.2 var(--display);margin-bottom:6px}
+
+/* list (search results) */
+.list{display:flex;flex-direction:column;padding-block:14px 60px}
+.hit{display:grid;grid-template-columns:64px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--line-soft);text-decoration:none}
+.hit img{width:64px;height:80px;object-fit:cover;border-radius:8px;background:var(--slate)}
+.hit h3{margin:0 0 4px;font:700 18px/1.2 var(--display);letter-spacing:-.02em}
+.hit h3 small{font:500 12px/1 var(--mono);color:var(--amber);letter-spacing:.06em;margin-left:8px}
+.hit p{margin:0;color:var(--mute);font-size:15px;line-height:1.5}
+
+/* calendar */
+.cal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr));gap:34px 26px;padding-block:28px 64px}
+.month h3{font:800 24px/1 var(--display);letter-spacing:-.03em;margin:0 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+.month h3 small{font:500 12px/1 var(--mono);color:var(--faint);letter-spacing:.06em}
+.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.dow span{font:600 10px/1 var(--mono);color:var(--faint);text-align:center;padding-bottom:6px;letter-spacing:.08em}
+.days a,.days span{aspect-ratio:1;display:grid;place-items:center;border-radius:8px;font:600 13px/1 var(--textf);font-variant-numeric:tabular-nums;text-decoration:none}
+.days a{background:var(--amber-soft);color:var(--amber)}
+.days a:hover,.days a:focus-visible{background:var(--amber);color:var(--amber-ink)}
+.days .todo{color:var(--faint);border:1px dashed rgba(255,255,255,.14)}
+.days .next{color:var(--text);border:1px solid var(--amber)}
+.legend{display:flex;flex-wrap:wrap;gap:16px;color:var(--mute);font-size:13px;padding-top:20px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+
+/* themes view */
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:14px;padding-block:28px 64px}
+.theme{display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:150px;padding:18px;border-radius:var(--r);background:var(--slate);border:1px solid var(--line-soft);text-decoration:none;position:relative;overflow:hidden}
+.theme:hover{border-color:var(--line)}
+.theme h3{margin:0;font:800 26px/1 var(--display);letter-spacing:-.035em;position:relative}
+.theme .n{font:500 12px/1 var(--mono);letter-spacing:.08em;color:var(--amber);position:relative}
+.theme .dots{display:grid;grid-template-columns:repeat(52,1fr);gap:1px;position:relative}
+.theme .dots i{aspect-ratio:1/3;background:rgba(255,255,255,.06);border-radius:1px}
+.theme .dots i.on{background:var(--amber)}
+
+/* entry */
+.entry{padding-block:18px 40px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--mute);text-decoration:none;font-size:15px;min-height:44px}
+.back:hover{color:var(--text)}
+.entry-head{display:grid;gap:26px;margin-top:8px;align-items:end}
+.entry-num{font:800 clamp(84px,24vw,210px)/.8 var(--display);letter-spacing:-.065em;margin:0}
+.entry-num small{font-size:.26em;color:var(--faint);letter-spacing:-.02em;font-weight:700;margin-left:.08em}
+.entry-date{font:700 clamp(20px,3vw,26px)/1.2 var(--display);letter-spacing:-.02em;margin:14px 0 0}
+.entry-meta{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--faint);font:500 12px/1.4 var(--mono);letter-spacing:.06em;margin-top:12px}
+.figure{margin:0;border-radius:var(--r);overflow:hidden;background:var(--slate)}
+.figure img{display:block;width:100%;height:auto}
+.prose{max-width:var(--measure);margin:34px auto 0;font:400 clamp(18px,2.1vw,19.5px)/1.72 var(--textf);color:var(--read);letter-spacing:-.005em;hyphens:manual}
+.prose p{margin:0 0 1.1em}
+.prose p.solo{color:var(--text);font-weight:500}
+.prose strong{color:var(--text)}
+.entry-foot{max-width:var(--measure);margin:36px auto 0;padding-top:22px;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:18px}
+.tagline{display:flex;flex-wrap:wrap;gap:8px}
+.tags{color:var(--faint);font-size:14px;line-height:1.6}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:var(--measure);margin:34px auto 0}
+.pager a,.pager span{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:var(--r);background:var(--slate);border:1px solid var(--line-soft);text-decoration:none;min-height:88px}
+.pager a:hover{border-color:var(--line)}
+.pager small{font:500 11px/1 var(--mono);letter-spacing:.1em;color:var(--faint)}
+.pager b{font:800 26px/1 var(--display);letter-spacing:-.04em}
+.pager .nx{text-align:right;align-items:flex-end}
+.pager span{opacity:.5}
+.pending{max-width:var(--measure);margin:34px auto;padding:26px;border-radius:var(--r);border:1px dashed rgba(255,255,255,.2);color:var(--mute)}
+.pending strong{display:block;color:var(--text);font:700 22px/1.2 var(--display);margin-bottom:8px}
+
+.foot{border-top:1px solid var(--line-soft);background:var(--graphite)}
+.foot .wrap{padding-block:28px;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;color:var(--mute);font-size:14px}
+.foot a{color:var(--text)}
+.loading{padding:80px 0;color:var(--mute)}
+
+@media (min-width:900px){
+  .entry-head{grid-template-columns:1fr minmax(0,440px);gap:48px}
+  .entry-head .figure{order:2}
+}
+@media (max-width:560px){
+  .brand .sep,.brand .name{display:none}
+  .brand img{height:30px}
+  .nav a{padding:10px 10px;font-size:14px}
+  .strip{grid-template-columns:repeat(37,1fr)}
+  .months-ruler{display:none}
+  .grid{grid-template-columns:1fr 1fr;gap:22px 12px}
+  .card .num{font-size:34px;left:10px;bottom:8px}
+  .card p{font-size:14px;-webkit-line-clamp:2}
+  .card .meta{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <a href="/" aria-label="enrico pierro, página inicial"><img src="https://enricopierro.com.br/wp-content/themes/enrico-pierro-gerenciavel/assets/img/brand/logo-enrico-branco-1600.png" alt="enrico pierro" width="1600" height="751"></a>
+      <span class="sep" aria-hidden="true"></span>
+      <a class="name" href="#inicio">diário <b>365</b></a>
+    </div>
+    <nav class="nav" aria-label="seções">
+      <a href="#inicio" data-nav="inicio">dias</a>
+      <a href="#calendario" data-nav="calendario">calendário</a>
+      <a href="#temas" data-nav="temas">temas</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app"><div class="wrap loading">carregando o diário…</div></main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>diário 365 · enrico pierro · as letras minúsculas são escolha do autor.</span>
+    <span><a href="/">voltar para enricopierro.com.br</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var DATA=null, BY={}, THEMES=[], TH={}, LAST=0, TOTAL=365;
+var state={q:"",theme:"",order:"asc",scroll:{}};
+var app=document.getElementById("app");
+var MES=["janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro"];
+var MES3=["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
+var WD=["domingo","segunda-feira","terça-feira","quarta-feira","quinta-feira","sexta-feira","sábado"];
+
+function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(s){return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"")}
+function strip(h){var d=document.createElement("div");d.innerHTML=h;return d.textContent||""}
+function dateOf(n){return new Date(Date.UTC(CONFIG.ano,0,n))}
+function longDate(n){var d=dateOf(n);return WD[d.getUTCDay()]+", "+d.getUTCDate()+" de "+MES[d.getUTCMonth()]+" de "+CONFIG.ano}
+function shortDate(n){var d=dateOf(n);return d.getUTCDate()+" "+MES3[d.getUTCMonth()]}
+function pubDate(s){var p=s.split("-");return (+p[2])+" de "+MES[+p[1]-1]}
+function mins(w){return Math.max(1,Math.round(w/200))}
+function pad(n){return ("00"+n).slice(-3)}
+
+/* ---------- config: ajuste aqui se algo mudar no wordpress ---------- */
+var CONFIG={
+  categoria:2129,          // id da categoria "diario" no wordpress
+  ano:2026,                // ano do diário (dia 1 = 1º de janeiro deste ano)
+  total:365,
+  cacheMin:15,             // minutos que o navegador guarda os textos antes de buscar de novo
+  api:"https://enricopierro.com.br/wp-json/wp/v2/posts"
+};
+var THEME_DEF=[
+  ["trabalho","trabalho",["trabalho","empresa","clt","contas","boleto","banco","finanças","pagamento","cobrança","entrevista","bradesco","cheque","caixa econômica","cef","aciam","rotary","premiação","prêmio","discurso","agenda","obrigações"],["fábrica","expediente","cliente"]],
+  ["fe","fé",["fé","espiritismo","centro espírita","deus","espiritualidade","milagre","evangelho","jesus","espírito","nosso lar","centro","místico","perdão","gratidão","acreditar"],["centro espírita","evangelho"]],
+  ["john","john & amor",["john","casal","casal lgbt","lgbt","amor","casamento","afeto","companheirismo"],["john"]],
+  ["familia","família",["família","familia","mãe","irmão","parente","sobrenome"],["minha mãe","meu irmão","meu pai"]],
+  ["amigos","amigos & festas",["amigos","amizade","amigo","festa","aniversário","aniversario","clube","bateria social","social","fraternidade","eae"],[]],
+  ["cachorros","os cachorros",["beagle","beagles","cachorro","cachorros","cahorros","pet","pai de pet","veterinário","fila brasileira","salsicha"],["bartô","bartolomeu","pandora","leandrinho","beagle"]],
+  ["viagens","viagens & estrada",["viagem","ilhabela","praia","estrada","minas gerais","aeroporto","guarujá","litoral","eua","mar","barco","helicóptero","marina","véspera de viagem","cachoeira","travessia"],["ilhabela"]],
+  ["corpo","corpo & saúde",["dor","enxaqueca","psiquiatra","remédio","linfedema","lipedema","sinusite","erisipela","exame","colonoscopia","gripe","doente","infecção","acupuntura","resfriado","dor de garganta","doença","dor de cabeça","anestesia","autismo","tea"],[]],
+  ["cabeca","cabeça & ansiedade",["ansiedade","depressão","melancolia","cansaço","exaustão","exausto","caos interno","pensamentos intrusivos","paranoia","apatia","autossabotagem","saúde mental","preocupação","sobrecarga","tensão","inquietação","crises","descontrole","letargia","desespero","recaída","terapia"],[]],
+  ["mesa","mesa & cozinha",["jantar","comida","almoço","pizza","restaurante","café da manhã","cozinha","cozinhar","vinho","feijoada","pão de queijo","comida japonesa","pizzaria","buffet","café","fome"],["cooktop"]],
+  ["clima","chuva, sol & frio",["chuva","sol","frio","inverno","calor","clima","nublado","goteira","tornado"],[]],
+  ["casa","casa & descanso",["casa","domingo","descanso","descansar","sono","dormir","final de semana","fds","cochilo","ficar em casa","caseiro","despertador","acordar","travesseiro","relaxar"],[]],
+  ["escrita","escrita & redes",["escritor","livro","podcast","instagram","redes sociais","papelaria","linkedin"],["abcpod","minha coluna","meu livro"]],
+  ["datas","feriados & datas",["carnaval","páscoa","feriado","ano-novo","reveillon","copa","copa do mundo","fifa","final de ano","1 de abril","janeiro"],["carnaval","páscoa"]]
+];
+var SKIP_TAGS=["diario","diário","enrico pierro","enrico"];
+
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function getJSON(url,tries){
+  tries=tries||0;
+  return fetch(url,{credentials:"same-origin"}).then(function(r){
+    if(r.status===429&&tries<3)return sleep(1500*(tries+1)).then(function(){return getJSON(url,tries+1)});
+    if(!r.ok)throw new Error(r.status);
+    return r.json().then(function(j){return {j:j,pages:+r.headers.get("x-wp-totalpages")||1}});
+  });
+}
+var FIELDS="&_fields=id,date,slug,link,title,content,_links,_embedded&_embed=wp:term";
+function loadAll(progress){
+  var out=[];
+  function page(p){
+    progress(out.length);
+    return getJSON(CONFIG.api+"?categories="+CONFIG.categoria+"&per_page=100&page="+p+"&orderby=date&order=asc"+FIELDS).then(function(res){
+      out=out.concat(res.j);
+      if(p<res.pages)return sleep(300).then(function(){return page(p+1)});
+      return out;
+    });
+  }
+  return page(1).then(function(posts){
+    // dias publicados fora da categoria "diario": procura pelo endereço padrão dia-N-365
+    var nums={},max=0;posts.forEach(function(p){var n=numOf(p);if(n){nums[n]=1;max=Math.max(max,n)}});
+    var gaps=[];for(var i=1;i<max;i++)if(!nums[i])gaps.push(i);
+    if(!gaps.length)return posts;
+    var q=gaps.slice(0,100).map(function(n){return "slug[]=dia-"+n+"-365"}).join("&");
+    return sleep(300).then(function(){return getJSON(CONFIG.api+"?per_page=100&"+q+FIELDS)}).then(function(res){return posts.concat(res.j)}).catch(function(){return posts});
+  });
+}
+function numOf(p){var t=strip(p.title&&p.title.rendered||"");var m=/dia\s*(\d{1,3})\s*\/\s*365/i.exec(t);return m?+m[1]:0}
+function cleanP(h){return h.replace(/<(?!\/?(?:em|strong|br)\b)[^>]*>/gi,"").replace(/<br\s*\/?>/gi,"<br>").replace(/\s+(class|style)="[^"]*"/gi,"").trim()}
+function photon(u,w){
+  if(!u)return "";
+  var base=u.split("?")[0];
+  if(/^https?:\/\/i\d\.wp\.com\//.test(base))return base+"?w="+w+"&ssl=1";
+  return u;
+}
+function toEntry(p){
+  var n=numOf(p);if(!n||n>CONFIG.total)return null;
+  var doc=new DOMParser().parseFromString(p.content.rendered,"text/html");
+  var img=doc.querySelector("img"),src="",iw=0,ih=0;
+  if(img){
+    src=img.getAttribute("data-orig-file")||img.getAttribute("src")||"";
+    var sz=(img.getAttribute("data-orig-size")||"").split(",");
+    if(sz.length===2){iw=+sz[0];ih=+sz[1]}
+  }
+  var paras=[].slice.call(doc.querySelectorAll("p,h2,h3,h4,li")).map(function(e){return cleanP(e.innerHTML)}).filter(function(h){return strip(h).trim()});
+  var tags=[];var groups=(p._embedded&&p._embedded["wp:term"])||[];
+  groups.forEach(function(g){(g||[]).forEach(function(t){if(t.taxonomy==="post_tag"){var nm=strip(t.name).toLowerCase().trim();if(nm&&SKIP_TAGS.indexOf(nm)<0&&!/^\d{4}$/.test(nm)&&tags.indexOf(nm)<0)tags.push(nm)}})});
+  tags.sort();
+  var plain=paras.map(strip).join(" "), np=norm(plain);
+  var th=[];
+  THEME_DEF.forEach(function(d){
+    var hit=tags.some(function(t){return d[2].indexOf(t)>-1})||d[3].some(function(k){return new RegExp("(^|[^a-z0-9])"+norm(k).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"([^a-z0-9]|$)").test(np)});
+    if(hit)th.push(d[0]);
+  });
+  var ex=plain.trim();if(ex.length>190)ex=ex.slice(0,190).replace(/\s+\S*$/,"")+"…";
+  return {n:n,pub:p.date.slice(0,10),link:p.link,img:photon(src,600),full:photon(src,1100),iw:iw,ih:ih,tags:tags,th:th,w:plain.split(/\s+/).filter(Boolean).length,ex:ex,p:paras,plain:plain};
+}
+function readCache(){try{var c=JSON.parse(localStorage.getItem("d365-cache")||"null");return c&&c.v===2&&c.e&&c.e.length?c:null}catch(e){return null}}
+function writeCache(entries){try{localStorage.setItem("d365-cache",JSON.stringify({v:2,t:Date.now(),e:entries.map(function(x){var o={};for(var k in x)if(k!=="idx")o[k]=x[k];return o})}))}catch(e){}}
+
+function fromPosts(posts){
+  var seen={},list=[];
+  posts.forEach(function(p){var e=toEntry(p);if(e&&!seen[e.n]){seen[e.n]=1;list.push(e)}});
+  return list;
+}
+function boot(entries){
+  DATA=entries.slice().sort(function(a,b){return a.n-b.n});
+  TOTAL=CONFIG.total;BY={};LAST=0;
+  THEMES=THEME_DEF.map(function(d){return {k:d[0],l:d[1]}});
+  THEMES.forEach(function(t){TH[t.k]=t.l});
+  DATA.forEach(function(e){BY[e.n]=e;e.idx=norm(e.plain+" "+e.tags.join(" ")+" "+longDate(e.n));LAST=Math.max(LAST,e.n)});
+}
+var started=false;
+function start(){if(started){route();return}started=true;window.addEventListener("hashchange",route);route()}
+function showLoading(n){if(!started)app.innerHTML='<div class="wrap loading">carregando o diário'+(n?" · "+n+" dias":"")+"…</div>"}
+var cache=readCache();
+if(cache){boot(cache.e);start()}
+if(!cache||Date.now()-cache.t>CONFIG.cacheMin*60000){
+  if(!started)showLoading(0);
+  loadAll(showLoading).then(function(posts){
+    var entries=fromPosts(posts);writeCache(entries);
+    var changed=!cache||cache.e.length!==entries.length;
+    boot(entries);if(changed)start();
+  }).catch(function(){
+    if(!started)app.innerHTML='<div class="wrap empty"><strong>não deu para carregar os textos.</strong>recarregue a página para tentar de novo.</div>';
+  });
+}
+
+document.addEventListener("keydown",function(ev){
+  var m=/^#dia-(\d+)$/.exec(location.hash); if(!m||ev.target.tagName==="INPUT")return;
+  var n=+m[1];
+  if(ev.key==="ArrowLeft"&&n>1)location.hash="#dia-"+(n-1);
+  if(ev.key==="ArrowRight"&&n<TOTAL)location.hash="#dia-"+(n+1);
+});
+
+var lastView="inicio";
+function route(){
+  document.title="diário 365";
+  var h=location.hash.replace(/^#/,"")||"inicio", m;
+  if(lastView&&!/^dia-/.test(lastView))state.scroll[lastView]=window.scrollY;
+  if((m=/^dia-(\d+)$/.exec(h))){renderEntry(+m[1]);setNav("");window.scrollTo(0,0)}
+  else if((m=/^tema-([a-z]+)$/.exec(h))&&TH[m[1]]){state.theme=m[1];state.q="";renderHome();setNav("inicio");var c=document.querySelector(".controls");if(c)window.scrollTo(0,c.offsetTop-60)}
+  else if(h==="calendario"){renderCalendar();setNav("calendario");window.scrollTo(0,state.scroll[h]||0)}
+  else if(h==="temas"){renderThemes();setNav("temas");window.scrollTo(0,state.scroll[h]||0)}
+  else{renderHome();setNav("inicio");window.scrollTo(0,state.scroll.inicio||0);h="inicio"}
+  lastView=h;
+}
+function setNav(k){document.querySelectorAll("[data-nav]").forEach(function(a){if(a.dataset.nav===k)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")})}
+
+/* ---------- home / index ---------- */
+function renderHome(){
+  var done=DATA.length, left=TOTAL-LAST, missing=[];
+  for(var i=1;i<=LAST;i++)if(!BY[i])missing.push(i);
+  var cont=+store("d365-last")||0;
+  var strip="";
+  for(var d=1;d<=TOTAL;d++){
+    var dt=dateOf(d), first=dt.getUTCDate()===1?" m":"";
+    strip+=BY[d]?'<a class="'+first.trim()+'" href="#dia-'+d+'" title="dia '+d+' · '+shortDate(d)+'" aria-label="dia '+d+'"></a>':'<span class="'+first.trim()+'" title="dia '+d+' · '+shortDate(d)+' · ainda não escrito"></span>';
+  }
+  var ruler=MES3.map(function(m){return"<span>"+m+"</span>"}).join("");
+  app.innerHTML=
+  '<section class="wrap hero">'+
+    '<div class="eyebrow">um texto por dia · '+CONFIG.ano+'</div>'+
+    '<h1>diário <span>365</span></h1>'+
+    '<p class="lede">do 1º de janeiro ao último dia do ano, um dia de cada vez. o cotidiano, o trabalho, a fé, a casa, o john, os cachorros e tudo o que coube entre o despertador e a hora de dormir.</p>'+
+    '<div class="count"><span><strong>'+done+'</strong> dias escritos</span><span class="left"><strong>'+left+'</strong> ainda por vir</span>'+(missing.length?'<span>'+missing.length+' sem texto</span>':'')+'</div>'+
+    '<div class="cta">'+
+      (cont&&BY[cont]?'<a class="btn primary" href="#dia-'+cont+'">continuar do dia '+cont+'</a><a class="btn" href="#dia-1">começar do dia 1</a>':'<a class="btn primary" href="#dia-1">começar do dia 1</a>')+
+      '<a class="btn" href="#dia-'+LAST+'">último: dia '+LAST+'</a>'+
+    '</div>'+
+    '<div class="year" aria-label="linha do tempo do ano">'+
+      '<div class="year-head"><span class="eyebrow">linha do tempo</span><small>cada traço é um dia · âmbar = escrito</small></div>'+
+      '<div class="strip">'+strip+'</div><div class="months-ruler">'+ruler+'</div>'+
+    '</div>'+
+  '</section>'+
+  '<section class="controls" aria-label="buscar e filtrar"><div class="wrap">'+
+    '<label class="search"><span class="sr">buscar no diário</span>'+
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>'+
+      '<input id="q" type="search" inputmode="search" autocomplete="off" placeholder="buscar uma palavra, um nome, um dia…" value="'+esc(state.q)+'">'+
+      '<button class="clear" type="button" aria-label="limpar busca" '+(state.q?'':'hidden')+'>×</button>'+
+    '</label>'+
+    '<div class="chips" role="group" aria-label="temas">'+
+      '<button class="chip" type="button" data-t="" aria-pressed="'+(!state.theme)+'">todos <i>'+done+'</i></button>'+
+      THEMES.map(function(t){var c=DATA.filter(function(e){return e.th.indexOf(t.k)>-1}).length;return '<button class="chip" type="button" data-t="'+t.k+'" aria-pressed="'+(state.theme===t.k)+'">'+esc(t.l)+' <i>'+c+'</i></button>'}).join("")+
+    '</div>'+
+    '<div class="bar"><output id="n" aria-live="polite"></output>'+
+      '<div class="seg" role="group" aria-label="ordem"><button type="button" data-o="asc" aria-pressed="'+(state.order==="asc")+'">do início</button><button type="button" data-o="desc" aria-pressed="'+(state.order==="desc")+'">recentes</button></div>'+
+    '</div>'+
+  '</div></section>'+
+  '<section class="wrap" id="results"></section>';
+
+  var q=document.getElementById("q"), clr=app.querySelector(".clear"), t;
+  q.addEventListener("input",function(){clearTimeout(t);t=setTimeout(function(){state.q=q.value;clr.hidden=!q.value;renderResults()},140)});
+  q.addEventListener("keydown",function(e){if(e.key==="Enter"){q.blur()}});
+  clr.addEventListener("click",function(){q.value="";state.q="";clr.hidden=true;renderResults();q.focus()});
+  app.querySelectorAll("[data-t]").forEach(function(b){b.addEventListener("click",function(){
+    state.theme=b.dataset.t;app.querySelectorAll("[data-t]").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});renderResults();
+    if(location.hash.indexOf("#tema-")===0)history.replaceState(null,"","#inicio");
+  })});
+  app.querySelectorAll("[data-o]").forEach(function(b){b.addEventListener("click",function(){
+    state.order=b.dataset.o;app.querySelectorAll("[data-o]").forEach(function(x){x.setAttribute("aria-pressed",String(x===b))});renderResults();
+  })});
+  renderResults();
+}
+
+function snippet(e,terms){
+  var txt=e.plain, n=norm(txt), best=-1;
+  for(var i=0;i<terms.length;i++){var p=n.indexOf(terms[i]);if(p>-1&&(best<0||p<best))best=p}
+  if(best<0)return esc(e.ex);
+  var s=Math.max(0,best-70), en=Math.min(txt.length,best+150);
+  var out=(s>0?"…":"")+txt.slice(s,en)+(en<txt.length?"…":"");
+  var h=esc(out), hn=norm(h);
+  // highlight each term using positions from normalized copy (same length because NFD stripped marks are removed from both)
+  var marks=[];
+  terms.forEach(function(tm){var from=0,p;while((p=hn.indexOf(tm,from))>-1){marks.push([p,p+tm.length]);from=p+tm.length}});
+  if(!marks.length)return h;
+  marks.sort(function(a,b){return a[0]-b[0]});
+  var res="",last=0;marks.forEach(function(m){if(m[0]<last)return;res+=h.slice(last,m[0])+"<mark>"+h.slice(m[0],m[1])+"</mark>";last=m[1]});
+  return res+h.slice(last);
+}
+
+function renderResults(){
+  var box=document.getElementById("results"), out=document.getElementById("n");
+  var terms=norm(state.q).trim().split(/\s+/).filter(Boolean);
+  var num=/^(?:dia\s*)?(\d{1,3})$/.exec(norm(state.q).trim());
+  var list=DATA.filter(function(e){
+    if(state.theme&&e.th.indexOf(state.theme)<0)return false;
+    if(!terms.length)return true;
+    if(num&&+num[1]===e.n)return true;
+    return terms.every(function(t){return e.idx.indexOf(t)>-1});
+  });
+  if(num){list.sort(function(a,b){return (b.n===+num[1])-(a.n===+num[1])})}
+  else if(state.order==="desc")list=list.slice().reverse();
+  var label=list.length===1?"1 dia":list.length+" dias";
+  if(state.theme)label+=" em “"+TH[state.theme]+"”";
+  if(terms.length)label+=" com “"+esc(state.q.trim())+"”";
+  out.innerHTML=label;
+  if(!list.length){
+    var pend=num&&+num[1]>LAST&&+num[1]<=TOTAL;
+    box.innerHTML='<div class="empty"><strong>'+(pend?"o dia "+num[1]+" ainda não foi escrito.":"nada por aqui.")+'</strong>'+(pend?"ele cai em "+longDate(+num[1])+".":"tente outra palavra ou tire o filtro de tema.")+'</div>';
+    return;
+  }
+  if(terms.length){
+    box.innerHTML='<div class="list">'+list.map(function(e){
+      return '<a class="hit" href="#dia-'+e.n+'"><img loading="lazy" src="'+e.img+'" alt=""><div><h3>dia '+e.n+'<small>'+esc(shortDate(e.n))+'</small></h3><p>'+snippet(e,terms)+'</p></div></a>';
+    }).join("")+'</div>';
+  }else{
+    box.innerHTML='<div class="grid">'+list.map(card).join("")+'</div>';
+  }
+}
+function card(e){
+  return '<a class="card" href="#dia-'+e.n+'"><div class="ph"><img loading="lazy" decoding="async" src="'+e.img+'" alt=""><span class="num">'+e.n+'<small>/365</small></span></div>'+
+    '<span class="meta">'+esc(WD[dateOf(e.n).getUTCDay()].replace("-feira",""))+' · '+esc(shortDate(e.n))+'</span><p>'+esc(e.ex)+'</p></a>';
+}
+
+/* ---------- calendar ---------- */
+function renderCalendar(){
+  var html='<section class="wrap hero" style="padding-bottom:0"><div class="eyebrow">calendário</div><h1 style="font-size:clamp(46px,9vw,96px)">o ano, <span>dia a dia</span></h1>'+
+  '<div class="legend"><span><i style="background:var(--amber-soft);box-shadow:inset 0 0 0 1px var(--amber)"></i>escrito</span><span><i style="border:1px solid var(--amber)"></i>próximo a ser escrito</span><span><i style="border:1px dashed rgba(255,255,255,.25)"></i>ainda por vir</span></div></section><section class="wrap cal">';
+  var n=1;
+  for(var m=0;m<12;m++){
+    var days=new Date(Date.UTC(CONFIG.ano,m+1,0)).getUTCDate(), start=new Date(Date.UTC(CONFIG.ano,m,1)).getUTCDay(), cnt=0, cells="";
+    for(var b=0;b<start;b++)cells+='<span aria-hidden="true"></span>';
+    for(var d=1;d<=days;d++,n++){
+      if(BY[n]){cnt++;cells+='<a href="#dia-'+n+'" aria-label="dia '+n+', '+d+' de '+MES[m]+'" title="dia '+n+'">'+d+'</a>'}
+      else cells+='<span class="'+(n===LAST+1?"next":"todo")+'" title="dia '+n+' · ainda não escrito">'+d+'</span>';
+    }
+    html+='<div class="month"><h3>'+MES[m]+'<small>'+cnt+'/'+days+'</small></h3><div class="dow"><span>d</span><span>s</span><span>t</span><span>q</span><span>q</span><span>s</span><span>s</span></div><div class="days">'+cells+'</div></div>';
+  }
+  app.innerHTML=html+'</section>';
+}
+
+/* ---------- themes ---------- */
+function renderThemes(){
+  app.innerHTML='<section class="wrap hero" style="padding-bottom:0"><div class="eyebrow">temas</div><h1 style="font-size:clamp(46px,9vw,96px)">o que <span>atravessa</span> o ano</h1><p class="lede">os temas foram agrupados a partir das tags de cada post e de nomes que aparecem nos textos. cada faixa mostra em que semanas o tema aparece.</p></section>'+
+  '<section class="wrap themes">'+THEMES.map(function(t){
+    var es=DATA.filter(function(e){return e.th.indexOf(t.k)>-1}), wk={};
+    es.forEach(function(e){wk[Math.min(51,Math.floor((e.n-1)/7))]=1});
+    var dots="";for(var i=0;i<52;i++)dots+='<i class="'+(wk[i]?"on":"")+'"></i>';
+    return '<a class="theme" href="#tema-'+t.k+'"><span class="n">'+es.length+' dias</span><h3>'+esc(t.l)+'</h3><span class="dots" aria-hidden="true">'+dots+'</span></a>';
+  }).join("")+'</section>';
+}
+
+/* ---------- entry ---------- */
+function renderEntry(n){
+  document.title="dia "+n+" · diário 365";
+  var e=BY[n];
+  var prev=n>1?n-1:0, next=n<TOTAL?n+1:0;
+  var pager='<nav class="pager" aria-label="navegar entre dias">'+
+    (prev?'<a href="#dia-'+prev+'"><small>← anterior</small><b>dia '+prev+'</b></a>':'<span><small>início do ano</small><b>—</b></span>')+
+    (next?(BY[next]?'<a class="nx" href="#dia-'+next+'"><small>próximo →</small><b>dia '+next+'</b></a>':'<span class="nx"><small>próximo</small><b>dia '+next+'</b></span>'):'<span class="nx"><small>fim do ano</small><b>—</b></span>')+'</nav>';
+  if(!e){
+    app.innerHTML='<article class="wrap entry"><a class="back" href="#inicio">← todos os dias</a><div class="entry-head"><div><div class="eyebrow">dia '+n+'/365</div><h1 class="entry-num">'+n+'<small>/365</small></h1><p class="entry-date">'+esc(longDate(n))+'</p></div></div>'+
+      '<div class="pending"><strong>'+(n>LAST?"este dia ainda não foi escrito.":"este dia não tem texto publicado.")+'</strong>'+(n>LAST?"o diário está no dia "+LAST+". quando o texto sair no site, ele aparece aqui.":"não encontramos o post deste dia na categoria diário do site.")+' <a href="#dia-'+LAST+'">ler o último dia →</a></div>'+pager+'</article>';
+    return;
+  }
+  store("d365-last",String(n));
+  var body=e.p.map(function(p){var solo=strip(p).trim().split(/\s+/).length<=6;return '<p'+(solo?' class="solo"':'')+'>'+p+'</p>'}).join("");
+  var chips=e.th.map(function(k){return '<a class="chip" href="#tema-'+k+'">'+esc(TH[k])+'</a>'}).join("");
+  app.innerHTML='<article class="wrap entry">'+
+    '<a class="back" href="#inicio">← todos os dias</a>'+
+    '<header class="entry-head">'+
+      '<figure class="figure"><img src="'+(e.full||e.img)+'" alt="ilustração do dia '+n+'"'+(e.iw?' width="'+e.iw+'" height="'+e.ih+'"':'')+'></figure>'+
+      '<div><div class="eyebrow">diário 365</div><h1 class="entry-num">'+n+'<small>/365</small></h1>'+
+      '<p class="entry-date">'+esc(longDate(n))+'</p>'+
+      '<div class="entry-meta"><span>'+mins(e.w)+' min de leitura</span><span>'+e.w+' palavras</span><span>publicado em '+esc(pubDate(e.pub))+'</span></div></div>'+
+    '</header>'+
+    '<div class="prose">'+body+'</div>'+
+    '<footer class="entry-foot">'+
+      (chips?'<div class="tagline">'+chips+'</div>':'')+
+      (e.tags.length?'<div class="tags">tags: '+esc(e.tags.join(", "))+'</div>':'')+
+      '<a class="btn" style="align-self:flex-start" href="'+esc(e.link)+'" >ler o post original</a>'+
+    '</footer>'+pager+
+  '</article>';
+}
+})();
+</script>
+
+</body>
+</html>
